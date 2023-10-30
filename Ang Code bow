@@ -1,0 +1,646 @@
+#include <iostream>
+#include <queue>
+#include <stack>
+using namespace std;
+#define LINKEDLIST_H
+#define MAX_SIZE 100
+using namespace std;
+
+
+void welcome(){
+         cout<<"|";
+    for(int i = 0; i<50; i++){
+        cout<<"=";
+    }
+         cout<<"|";
+         cout<<"\n|";
+    cout<<"           WELCOME TO PET DATABASE SYSTEM         |";
+    cout<<"\n|";
+    
+    for(int i = 0; i<50; i++){
+        cout<<"=";
+    }
+    cout<<"|"<<endl;
+
+    cout<<"\n[1] INSERT PET INFORMATION";
+    cout<<"\n[2] REMOVE PET INFORMATION";
+    cout<<"\n[3] DISPLAY PET INFORMATION";
+    cout<<"\n[4] SEARCH PET INFORMATION";
+    cout<<"\n[5] SORT PET INFORMATION";
+    cout<<"\n[6] MODIFY PET INFORMATION";
+    cout<<"\n[7] QUEUE FOR PET CHECK UP";
+    cout<<"\n[8] STACKS FOR PATIENTS WHO DID CHECK-UP";
+    cout<<"\n[9] EXIT";
+
+    cout<<"\n\nENTER YOUR CHOICE: ";
+}
+ 
+struct Pet {
+    int id;
+    string name;
+    string age;
+    string species;
+    string breed;
+    string weight;
+    string birthDate;
+};
+
+
+class Node {
+    public:
+    Pet value;
+    Node* next;
+
+    Node(Pet petdata) : value(petdata), next(nullptr){}
+};
+
+class SLL {
+private:
+Node* head;
+
+public:
+SLL() : head(nullptr){}
+
+void insertAtB(Pet petData){
+Node* newnode = new Node(petData);
+newnode -> next = head;
+head = newnode;
+}
+
+void insertAtE (Pet petData){
+Node* newnode = new Node(petData);
+
+if(head == nullptr){
+   head = newnode;
+}
+else{
+    Node* temp = head;
+    while(temp -> next != NULL){
+        temp = temp -> next;
+    }
+    temp -> next = newnode;
+}
+
+}
+
+void insertAfterP (Pet petData, int pos){
+    Node* newnode = new Node(petData);
+
+if(head == NULL){
+    if(pos == 0){
+       newnode -> next = head;
+       head = newnode;
+    }
+    else{
+       cout<<"Invalid position, List is empty";    
+    }
+    }
+    else { 
+        Node* temp = head;
+        int currentpos = 0;
+        while(temp != NULL && currentpos < pos - 1  ){
+           temp = temp -> next;
+           currentpos += 1;
+        }
+
+        if(temp != NULL){
+          newnode -> next = temp -> next;
+          temp -> next = newnode;
+        }
+        else{
+            cout<<"Invalid position. Position is out of range.";
+        }
+    }
+}
+
+void deleteIt (string target){
+  if(head == NULL){
+    cout<< "The database is empty"<<endl;
+  }
+  if(head->value.name == target){
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        if(head == NULL){
+                cout<< "The database is empty"<<endl;
+        }
+    }
+    Node* temp = head;
+    while(temp -> next && temp->next->value.name != target){
+        temp = temp->next;
+    }
+    if(temp -> next != nullptr){
+        Node* toDelete = temp->next;
+        temp->next = toDelete->next;
+        delete toDelete;
+    }
+  }
+ 
+  void modify(SLL list, string old_value, string target){
+    Node* temp = head;
+    while(temp != NULL){
+      if(temp->value.name == old_value){
+         temp->value.name = target;
+      }
+      if(temp->value.age == old_value){
+         temp->value.age = target;
+      }
+      if(temp->value.species == old_value){
+         temp->value.species = target;
+      }
+      if(temp->value.breed == old_value){
+         temp->value.breed = target;
+      }
+      if(temp->value.weight == old_value){
+         temp->value.weight = target;
+      }
+      if(temp->value.birthDate == old_value){
+         temp->value.birthDate = target;
+      }
+      temp = temp->next;
+    }
+  }
+
+
+void searchElement(SLL list, string target){
+     Node* temp = head;
+     string ans;
+     while(temp != NULL){
+       if(temp->value.name == target){
+         cout<<"The element is found!!!"<<endl;
+         cout<<"Do you want to print the specific data? :";
+         cin>>ans;
+       if(ans == "y" || ans == "Y"){
+         cout<<"ID: "<<temp -> value.id;
+        cout<<" NAME: "<<temp -> value.name;
+        cout<<" AGE: "<<temp -> value.age<<" year/s old";
+        cout<<" SPECIES: "<<temp -> value.species;
+        cout<<" BREED: "<<temp -> value.breed;
+        cout<<" WEIGHT: "<<temp -> value.weight<<" kg";
+        cout<<" BIRTHDATE: "<<temp -> value.birthDate;
+         break;
+       }
+       }
+       else {
+        cout<<"Traversing: This element is not it!"<<endl;
+       }
+       temp = temp ->next;
+       }
+       
+     }
+    
+
+void sortBubble(SLL u2){
+      bool swapped;
+      Node* lastNode = NULL;
+      lastNode = NULL;
+      do{
+        swapped = false;
+        Node* temp =head;
+      while(temp->next != lastNode){
+        if(temp ->value.id> temp->next->value.id){
+          swap(temp->value.id,temp->next->value.id);
+          swapped = true;
+        }
+        temp = temp->next;
+      }
+} while(swapped == true);
+}
+
+void show(){
+    Node* temp = head;
+    while(temp != NULL){
+        cout<<"ID: "<<temp -> value.id;
+        cout<<" NAME: "<<temp -> value.name;
+        cout<<" AGE: "<<temp -> value.age<<" year/s old";
+        cout<<" SPECIES: "<<temp -> value.species;
+        cout<<" BREED: "<<temp -> value.breed;
+        cout<<" WEIGHT: "<<temp -> value.weight<<" kg";
+        cout<<" BIRTHDATE: "<<temp -> value.birthDate;
+        if(temp->next != NULL){
+            cout<<" \n|| ";
+        }
+        temp = temp -> next;
+    }
+}
+
+};
+
+#define ARRAY_H
+using namespace std;
+#define MAX_SIZE 100
+#include <queue>
+#include <stack>
+
+void SignAndRegister(){
+           cout<<"|";
+    for(int i = 0; i<50; i++){
+        cout<<"=";
+    }
+         cout<<"|";
+         cout<<"\n|";
+    cout<<"           WELCOME TO (VETERINARY SERVICES)         |";
+    cout<<"\n|";
+    
+    for(int i = 0; i<50; i++){
+        cout<<"=";
+    }
+    cout<<"|"<<endl;
+
+    cout<<"\n[1] REGISTER";
+    cout<<"\n[2] SIGN IN";
+    cout<<"\n[3] EXIT";
+
+    cout<<"\n\nENTER YOUR CHOICE: ";
+    }
+
+    void Queues(){
+           cout<<"|";
+    for(int i = 0; i<50; i++){
+        cout<<"=";
+    }
+         cout<<"|";
+         cout<<"\n|";
+    cout<<"           WELCOME TO (QUEUING SYSTEM)         |";
+    cout<<"\n|";
+    
+    for(int i = 0; i<50; i++){
+        cout<<"=";
+    }
+    cout<<"|"<<endl;
+
+    cout<<"\n[1] ADD";
+    cout<<"\n[2] DELETE";
+    cout<<"\n[3] PRINT";
+    cout<<"\n[4] EXIT";
+
+    cout<<"\n\nENTER YOUR CHOICE: ";
+    }
+       
+    void Stackss(){
+           cout<<"|";
+    for(int i = 0; i<50; i++){
+        cout<<"=";
+    }
+         cout<<"|";
+         cout<<"\n|";
+    cout<<"           WELCOME TO (STACKS SYSTEM)         |";
+    cout<<"\n|";
+    
+    for(int i = 0; i<50; i++){
+        cout<<"=";
+    }
+    cout<<"|"<<endl;
+
+    cout<<"\n[1] ADD";
+    cout<<"\n[2] DELETE";
+    cout<<"\n[3] PRINT";
+    cout<<"\n[4] EXIT";
+
+    cout<<"\n\nENTER YOUR CHOICE: ";
+    }
+
+
+void printQueue (queue<string> w){
+    while(!w.empty()){
+        cout<<w.front()<< " ";
+        w.pop();
+    }
+    cout<<endl;
+}   
+
+void printStack (stack<string> w){
+    while(!w.empty()){
+        cout<<w.top()<< " ";
+        w.pop();
+    }
+    cout<<endl;
+}   
+
+
+class myArray{
+    public:
+    string arr[MAX_SIZE];
+    int index = 0;
+
+    void add(string data){
+      arr[index] = data;
+      index++;
+    }
+
+    void modify(string data, int idx){
+        arr[idx] = data;
+    }
+
+    void remove (string data){
+        for(int i = 0; i<index; i++){
+        if (arr[i] == data){
+                arr[i] = arr[i+1];
+                index--;
+            }
+        }
+    }
+
+    void display(){
+        for(int i = 0; i<index; i++){
+            cout<<arr[i]<<" ";
+        }
+    }
+        
+
+    bool check(string user){
+    for(int i = 0; i < index; i++){ 
+        if(arr[i] == user) {
+            return true;
+        }
+    }
+    return false;
+}
+    };
+
+
+
+
+
+
+
+int main(){
+    int ans,an,incri = 0;
+    string answ,answer,pass = "VetCare2022",user,pswd,answer1,answer2;
+    SLL list;
+    Pet firstPet;
+    myArray userName,passWord;
+    queue<string> q;
+    stack<string> s;
+   
+do{
+    SignAndRegister(); //Welcome page for Registration and Signing in
+    cin>>an;
+
+if(an == 1){ // Registration Method
+   cout<<"REGISTRATION"<<endl;
+   cout<<"Please enter your desired username: ";
+   cin>>user;
+   userName.add(user);
+   cout<<"Please enter your desired password: ";
+   cin>>pswd;
+   passWord.add(pswd);
+   if(userName.check(user) == true && passWord.check(pswd) == true){// Checker if the following account is inside their designated arrays if so then registration is a success
+   cout<<"Registration is successful!!!"<<endl;
+   }
+}
+
+
+else if(an == 2){ // Sign in Method and Start of the Program
+   cout<<"LOG IN"<<endl;
+   cout<<"Enter your username: ";
+   cin>>user;
+   cout<<"Enter your password: ";
+   cin>>pswd;
+
+       if(userName.check(user) == true && passWord.check(pswd) == true){ // Checker if the following account is inside their designated arrays if so they can start the program
+        cout<<"Login Successfully!!!"<<endl;
+
+    do{
+    welcome();// welcome page of the Pet Database System
+      cin>>ans;
+
+
+  if(ans == 1){ // Insertion
+    getline(cin,firstPet.name);
+    firstPet.id = incri;
+    incri++;
+    cout<<"Enter the name of your pet: ";
+    getline(cin,firstPet.name);
+    cout<<"Enter the species of your pet: ";
+    getline(cin,firstPet.species);
+    cout<<"Enter the breed of your pet: ";
+    getline(cin,firstPet.breed);
+    cout<<"Enter the age of your pet in years: ";
+    getline(cin,firstPet.age);
+    cout<<"Enter the weight of your pet in kilogram: ";
+    getline(cin,firstPet.weight);
+    cout<<"Enter the birthdate of your pet: ";
+    getline(cin,firstPet.birthDate);
+    list.insertAtE(firstPet);
+    }
+
+
+else if(ans == 2){ // Deletion
+cout<<"What is the name of the pet you want to remove in the database? : ";
+cin>>answer;
+list.deleteIt(answer);
+}
+
+
+else if(ans == 3){ //Displaying 
+ list.show();
+}
+
+
+else if(ans == 4){ //Search and Display Specfic Data
+    cout<<"What is the name of the pet you want to search in the database? :";
+    cin>>answer;
+    list.searchElement(list,answer);
+}
+
+
+else if(ans == 5){ //Sortation
+    list.sortBubble(list);
+    cout<<"This list is sorted successfully!!!";
+}
+
+else if(ans == 6){//Modification
+   cout<<"What do you want to modify(Name,Age, etc): ";
+   cin>>answer1;
+
+   if(answer1 == "name" || answer1 == "Name"){
+      cout<<"What is the name of the pet initially? :";
+      cin>>answer;
+      cout<<"What is the name you want it to be change? :";
+      cin>>answer2;
+      list.modify(list,answer,answer2);
+      cout<<"Modified Successfully!!!"<<endl;
+   }
+
+   if(answer1 == "age" || answer1 == "Age"){
+      cout<<"What is the age of the pet initially? :";
+      cin>>answer;
+      cout<<"What is the age you want it to be change? :";
+      cin>>answer2;
+      list.modify(list,answer,answer2);
+      cout<<"Modified Successfully!!!"<<endl;
+   }
+
+   if(answer1 == "Species" || answer1 == "species"){
+      cout<<"What is the species of the pet initially? :";
+      cin>>answer;
+      cout<<"What is the species you want it to be change? :";
+      cin>>answer2;
+      list.modify(list,answer,answer2);
+      cout<<"Modified Successfully!!!"<<endl;
+   }
+
+   if(answer1 == "breed" || answer1 == "breed"){
+      cout<<"What is the breed of the pet initially? :";
+      cin>>answer;
+      cout<<"What is the breed you want it to be change? :";
+      cin>>answer2;
+      list.modify(list,answer,answer2);
+      cout<<"Modified Successfully!!!"<<endl;
+   }
+
+   if(answer1 == "weight" || answer1 == "weight"){
+      cout<<"What is the weight of the pet initially? :";
+      cin>>answer;
+      cout<<"What is the weight you want it to be change? :";
+      cin>>answer2;
+      list.modify(list,answer,answer2);
+      cout<<"Modified Successfully!!!"<<endl;
+   }
+
+   if(answer1 == "birthdate" || answer1 == "Birthdate"){
+      cout<<"What is the birthdate of the pet initially? :";
+      cin>>answer;
+      cout<<"What is the birthdate you want it to be change? :";
+      cin>>answer2;
+      list.modify(list,answer,answer2);
+      cout<<"Modified Successfully!!!"<<endl;
+   }
+
+   if(answer1  != "birthdate" || answer1  != "Birthdate" || answer1  != "weight" || answer1  != "weight" || answer1  != "breed" || answer1  != "breed"|| answer1  != "Species" || answer1  != "species" || answer1  != "age" || answer1  != "Age"|| answer1 != "name" || answer1  != "Name"){ //Error Handling to avoid different inputs
+     cout<<"Invalid Choice Please Try Again!!!"<<endl;
+}
+
+}
+
+else if(ans == 7){// QUEUES IMPLEMENTATION
+ do{
+    Queues();
+    cin>>ans;
+
+   if(ans == 1){//INSERTION OF QUEUES
+    cout<<"Enter the name & species & breed of the patient(Lego,Cat,British ShortHair): ";
+    getline(cin,answer2);
+     q.push(answer2);
+   }
+
+   else if (ans == 2){//DELETE QUEUES BUT IT TRANSFER TO STACKS
+    if(!q.empty()){
+       s.push(q.front());
+       q.pop();
+    }
+   }
+
+   else if (ans == 3){//PRINT 
+    printQueue(q);
+    
+   }
+
+   else if (ans == 4){//EXIT
+      cout<<"PET QUEUEING SYSTEM IS HERE TO SERVE YOU!!!! ";
+      break;
+   }
+
+   else if(ans != 1 || ans != 2 || ans != 3 || ans != 4){ //Error Handling to avoid different inputs
+     cout<<"Invalid Choice Please Try Again!!!"<<endl;
+}
+
+
+cout<<"Do you have another patient to enlist in the queue? : ";
+cin>>answer1;
+
+if(answer1 == "n" || answer1 == "N" ){
+ cout<<"PET QUEUEING SYSTEM IS HERE TO SERVE YOU!!!! ";
+      break;
+}
+
+}while(answer1 == "y" || answer1 == "Y");
+}
+
+else if(ans == 8){
+do{
+   Stackss();
+   cin>>ans;
+
+   if(ans == 1){
+    cout<<"What is the name & species & breed of the checked up patient?(Lego,Cat,British ShortHair) :";
+    getline(cin,answer2);
+    s.push(answer2);
+
+   }
+
+   else if(ans == 2){
+     s.pop();
+   }
+    
+   else if(ans == 3){
+    printStack(s);
+   }
+
+    else if (ans == 4){//EXIT
+      cout<<"PET STACKS SYSTEM IS HERE TO SERVE YOU!!!! ";
+      break;
+   }
+
+else if(ans != 1 || ans != 2 || ans != 3 || ans != 4){ //Error Handling to avoid different inputs
+     cout<<"Invalid Choice Please Try Again!!!"<<endl;
+}
+
+    cout<<"Do you have another transaction? : ";
+cin>>answer1;
+
+if(answer1 == "n" || answer1 == "N" ){
+ cout<<"PET QUEUEING SYSTEM IS HERE TO SERVE YOU!!!! ";
+      break;
+}
+
+}while(answer1 == "y" || answer1 == "Y");
+
+}
+
+else if(ans == 9){ //Ending the Program
+    cout<<"PET DATABASE IS HERE TO SERVE YOU!!!!"<<endl;
+    break;
+}
+
+else if(ans != 1 || ans != 2 || ans != 3 || ans != 4 || ans != 5 || ans != 6 || ans != 7 || ans != 8 || ans != 9){ //Error Handling to avoid different inputs
+     cout<<"Invalid Choice Please Try Again!!!"<<endl;
+}
+  cout<<"\nDo you still have any transactions?? : ";
+  cin>>answer;
+
+  if(answer == "n" || answer == "N"){ //if there is nothing else do to then it will break the loop
+    cout<<"PET DATABASE IS HERE TO SERVE YOU!!!!"<<endl;
+     break;
+ }   
+
+ } while(answer == "Y" || answer == "y");//Loop
+
+    } else {
+        cout<<"\nLogin is not successful it is either wrong password or username or you are not registered yet!!"<<endl;
+    }
+
+}
+
+else if(an == 3){ //End of the Program
+    break;
+}
+
+else if(an != 1 || an != 2 || an != 3){ //Error Handling
+    cout<<"Invalid choice, Please Try Again!!!"<<endl;
+}
+
+cout<<"\nDo you still have any transactions?? : ";
+cin>>answer;
+
+if(answer == "n" || answer == "N"){// Ending of the program
+    cout<<"FIN"<<endl;
+     break;
+ }   
+
+} while(answer == "Y" || answer == "y");//Loop
+
+return 0;
+
+}
